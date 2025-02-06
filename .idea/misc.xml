@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/demo/pom.xml" />
+        <option value="$PROJECT_DIR$/competition-service/pom.xml" />
+        <option value="$PROJECT_DIR$/results/pom.xml" />
+        <option value="$PROJECT_DIR$/participant-service/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/demo/pom.xml" />
+      </set>
+    </option>
+    <option name="workspaceImportForciblyTurnedOn" value="true" />
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="19" project-jdk-type="JavaSDK" />
+</project>

@@ -1,0 +1,87 @@
+version: '3'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - competitions-service
+      - participants-service
+      - results-service
+
+
+  competitions-service:
+    build: ./competition-service
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://competitiondb:3306/mydb
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=userpassword
+
+  participants-service:
+    build: ./participant-service
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://participantsdb:3306/mydb
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=userpassword
+
+  results-service:
+    build: ./results
+    ports:
+      - "8083:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://resultdb:3306/mydb
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=userpassword
+
+
+  resultdb:
+    image: mysql:5.7
+    container_name: mysql-container-resultdb
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - resultdb-data:/var/lib/mysql
+
+
+
+
+  competitiondb:
+    image: mysql:5.7
+    container_name: mysql-container-competitiondb
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
+    ports:
+      - "3307:3306"  # Використовуйте різні порти для різних контейнерів
+    volumes:
+      - competitiondb-data:/var/lib/mysql
+
+
+  participantsdb:
+    image: mysql:5.7
+    container_name: mysql-container-participantsdb
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
+    ports:
+      - "3308:3306"  # Використовуйте різні порти для різних контейнерів
+    volumes:
+      - participantsdb-data:/var/lib/mysql
+
+volumes:
+  resultdb-data:
+  competitiondb-data:
+  participantsdb-data:

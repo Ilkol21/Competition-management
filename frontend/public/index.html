@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Система соревнований</title>
   <link rel="stylesheet" href="styles.css">
-<!--  <script defer src="app.js"></script>-->
 </head>
 <body>
 <h1>Система соревнований</h1>
@@ -30,54 +29,6 @@
 <input type="text" id="part-name" placeholder="Имя">
 <input type="number" id="part-comp-id" placeholder="ID соревнования">
 <button id="addParticipantBtn">Добавить</button>
-<button id="myButton">Click me</button>
-
-<script>
-function provideFunction() {
-    console.log("Provide function executed!");
-  }
-
-async function fetchParticipants() {
-  try {
-    const participants = await fetch('http://localhost:8084/api/participants').then(res => res.json());
-    document.getElementById('participants').innerHTML = participants.map(part => `
-      <tr>
-        <td>${part.id}</td>
-        <td>${part.name}</td>
-        <td>${part.competitionId}</td>
-        <td>
-          <button onclick="deleteParticipant(${part.id})">Удалить</button>
-        </td>
-      </tr>
-    `).join('');
-  } catch (error) {
-    console.error("Ошибка при загрузке участников:", error);
-  }
-}
-async function addParticipant() {
-  const name = document.getElementById('part-name').value;
-  const competitionId = document.getElementById('part-comp-id').value;
-  console.log("ebal");
-  try {
-    console.log("ebal1");
-    await fetch('http://localhost:8084/api/participants', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({name, competitionId})
-    });
-    console.log("ebal3");
-    await fetchParticipants();  // обновить список после добавления
-  }
-  catch (error) {
-    console.log("ebal4");
-    console.error("Ошибка при добавлении участника:", error);
-  }
-}
-
-document.getElementById("addParticipantBtn").addEventListener("click", async function() {
-    await addParticipant();
-  });
-</script>
 
 <h2>Участники</h2>
 <table>
@@ -104,5 +55,186 @@ document.getElementById("addParticipantBtn").addEventListener("click", async fun
   </thead>
   <tbody id="results"></tbody>
 </table>
+
+<script>
+  async function fetchCompetitions() {
+    try {
+      const competitions = await fetch('http://localhost:8082/api/competitions').then(res => res.json());
+      document.getElementById('competitions').innerHTML = competitions.map(comp => `
+      <tr>
+        <td>${comp.id}</td>
+        <td>${comp.name}</td>
+        <td>${comp.location}</td>
+        <td>${comp.date}</td>
+        <td>
+          <button class="delete-competition" data-id="${comp.id}">Удалить</button>
+        </td>
+      </tr>
+    `).join('');
+    } catch (error) {
+      console.error("Ошибка при загрузке соревнований:", error);
+    }
+  }
+
+  async function fetchParticipants() {
+    try {
+      const participants = await fetch('http://localhost:8084/api/participants').then(res => res.json());
+      document.getElementById('participants').innerHTML = participants.map(part => `
+      <tr>
+        <td>${part.id}</td>
+        <td>${part.name}</td>
+        <td>${part.competitionId}</td>
+        <td>
+          <button class="delete-participant" data-id="${part.id}">Удалить</button>
+        </td>
+      </tr>
+    `).join('');
+    } catch (error) {
+      console.error("Ошибка при загрузке участников:", error);
+    }
+  }
+
+  async function fetchResults() {
+    try {
+      const results = await fetch('http://localhost:8083/api/results').then(res => res.json());
+      document.getElementById('results').innerHTML = results.map(res => `
+      <tr>
+        <td>${res.id}</td>
+        <td>${res.competitionId}</td>
+        <td>${res.participantId}</td>
+        <td>${res.score}</td>
+        <td>
+          <button class="delete-result" data-id="${res.id}">Удалить</button>
+        </td>
+      </tr>
+    `).join('');
+    } catch (error) {
+      console.error("Ошибка при загрузке результатов:", error);
+    }
+  }
+  async function addCompetition() {
+    const name = document.getElementById('comp-name').value;
+    const location = document.getElementById('comp-location').value;
+    const date = document.getElementById('comp-date').value;
+
+    try {
+      await fetch('http://localhost:8082/api/competitions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, location, date })
+      });
+      await fetchCompetitions(); // Обновляем список соревнований
+    } catch (error) {
+      console.error("Ошибка при добавлении соревнования:", error);
+    }
+  }
+
+  document.getElementById("addCompetitionBtn").addEventListener("click", addCompetition);
+
+
+
+
+  async function addParticipant() {
+    const name = document.getElementById('part-name').value;
+    const competitionId = document.getElementById('part-comp-id').value;
+    try {
+      await fetch('http://localhost:8084/api/participants', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({name, competitionId})
+      });
+      await fetchParticipants();
+    } catch (error) {
+      console.error("Ошибка при добавлении участника:", error);
+    }
+  }
+
+  document.getElementById("addParticipantBtn").addEventListener("click", addParticipant);
+
+
+
+  document.addEventListener("click", async (event) => {
+    if (event.target.classList.contains("delete-competition")) {
+      const id = event.target.getAttribute("data-id");
+      await deleteCompetition(id);
+    }
+
+    if (event.target.classList.contains("delete-participant")) {
+      const id = event.target.getAttribute("data-id");
+      await deleteParticipant(id);
+    }
+  });
+
+
+
+  async function addResult() {
+    const competitionId = document.getElementById('res-comp-id').value;
+    const participantId = document.getElementById('res-part-id').value;
+    const score = document.getElementById('res-score').value;
+
+    try {
+      await fetch('http://localhost:8083/api/results', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ competitionId, participantId, score })
+      });
+      await fetchResults(); // Обновляем список результатов
+    } catch (error) {
+      console.error("Ошибка при добавлении результата:", error);
+    }
+  }
+
+  document.getElementById("addResultBtn").addEventListener("click", addResult);
+
+
+  document.getElementById("addResultBtn").addEventListener("click", addResult);
+
+  async function deleteCompetition(id) {
+    console.log(`Deleting competition with id: ${id}`);  // Логирование id
+    try {
+      await fetch(`http://localhost:8082/api/competitions/${id}`, {method: 'DELETE'});
+      await fetchCompetitions();  // Перезагружаем список соревнований
+    } catch (error) {
+      console.error("Ошибка при удалении соревнования:", error);
+    }
+  }
+
+  async function deleteParticipant(id) {
+    console.log(`Deleting participant with id: ${id}`);  // Логирование id
+    try {
+      await fetch(`http://localhost:8084/api/participants/${id}`, {method: 'DELETE'});
+      await fetchParticipants();  // Перезагружаем список участников
+    } catch (error) {
+      console.error("Ошибка при удалении участника:", error);
+    }
+  }
+
+  async function deleteResult(id) {
+    console.log(`Deleting result with id: ${id}`);  // Логирование id
+    try {
+      await fetch(`http://localhost:8083/api/results/${id}`, {method: 'DELETE'});
+      await fetchResults();  // Перезагружаем список результатов
+    } catch (error) {
+      console.error("Ошибка при удалении результата:", error);
+    }
+  }
+
+
+  document.addEventListener("click", async (event) => {
+    if (event.target.classList.contains("delete-result")) {
+      const id = event.target.getAttribute("data-id");
+      await deleteResult(id);
+    }
+  });
+
+  // Загружаем данные при загрузке страницы
+  fetchCompetitions();
+  fetchParticipants();
+  fetchResults();
+</script>
+
 </body>
 </html>
+

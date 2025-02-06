@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3cdd0e2-c491-4639-b450-aaca1a5deb94" name="Changes" comment="" />
+    <list default="true" id="c3cdd0e2-c491-4639-b450-aaca1a5deb94" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/competition-service/src/main/java/com/example/competitionservice/Competition.java" beforeDir="false" afterPath="$PROJECT_DIR$/competition-service/src/main/java/com/example/competitionservice/Competition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/competition-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/competition-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/src/main/java/com/example/results/Result.java" beforeDir="false" afterPath="$PROJECT_DIR$/results/src/main/java/com/example/results/Result.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/src/main/java/com/example/results/ResultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/results/src/main/java/com/example/results/ResultController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/results/src/main/resources/application.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -66,10 +75,10 @@
     "Spring Boot.ResultsApplication.executor": "Run",
     "Spring Boot.Unnamed.executor": "Run",
     "Spring Boot.java .executor": "Run",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "jdk.selected.JAVA_MODULE": "openjdk-20",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/illia/Desktop/competition-management/frontend/public",
+    "last_opened_file_path": "/home/illia/Desktop/competition-management",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -247,6 +256,8 @@
       <workItem from="1738610523341" duration="3813000" />
       <workItem from="1738693112377" duration="3245000" />
       <workItem from="1738697373533" duration="18388000" />
+      <workItem from="1738865822219" duration="2033000" />
+      <workItem from="1738880330835" duration="2788000" />
     </task>
     <servers />
   </component>

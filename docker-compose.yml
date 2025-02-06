@@ -31,7 +31,7 @@ services:
   results-service:
     build: ./results
     ports:
-      - "8083:8081"
+      - "8083:8083"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://resultdb:3306/mydb
       - SPRING_DATASOURCE_USERNAME=user
